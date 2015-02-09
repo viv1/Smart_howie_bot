@@ -1,0 +1,11 @@
+$When session starts, take information from client like:
+	age
+	sex
+	sexual orientation
+	ethnicity
+	purpose(career, addiction,identity,depression,etc)
+
+$The session might convert from one purpose to another.Try to take this into account.
+
+$Also, we can use sentiment analysis library for determining whether statement is positive or negative
+
