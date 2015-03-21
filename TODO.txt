@@ -10,4 +10,9 @@ $The session might convert from one purpose to another.Try to take this into acc
 
 $Classify the topic of conversation into one of the categories.Then, we can use sentiment analysis library for determining whether statement is positive or negative.And appropriate response needs to be given accordingly.
 
+******************************************************
+
+//Use frequency and POS tag and relevance..
+// Generate sentences from a given set of words using grammar, and then check whether he sentence makes  sense....using training data and test data...if makes sense...use as output
+
 
