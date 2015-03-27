@@ -63,7 +63,7 @@ def main():
   
   test_file = open('pp_1_data_1.txt', 'r')
 
-  Markov_db_file = open('output.txt','rwb')
+  #Markov_db_file = open('output.txt','rwb')
 
   Markov_dict={}
 
@@ -125,6 +125,11 @@ def main():
           Markov_dict[key].append(tokens[i+chain_len])  # append to existing set of items for the keys
 
   print(Markov_dict)  
+  with open('output.txt', 'wb') as handle:
+    pickle.dump(Markov_dict, handle)
+
+  #with open('file.txt', 'rb') as handle:
+  #b = pickle.loads(handle.read())
   #pickle.dump(Markov_dict,Markov_db_file)
   #kklk=pickle.load(Markov_db_file)
   #print(kklk)

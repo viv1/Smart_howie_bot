@@ -1,0 +1,44 @@
+(dp0
+(S'brings'
+p1
+S'office'
+p2
+S'today'
+p3
+tp4
+(lp5
+S"Well, I am not sure really. I had heard that too, and I guess there have been some things on my mind lately. Maybe I shouldn't even be here. \n"
+p6
+as(S'well'
+p7
+S'rachel'
+p8
+S'makes'
+p9
+S'comfortable'
+p10
+tp11
+(lp12
+S'I have never been to a therapist before.\n'
+p13
+as(S'ever'
+p14
+S'therapist'
+p15
+tp16
+(lp17
+S'Yes.Call me when happy.\n'
+p18
+aS'Please, call me Rachel. Everyone does. \n'
+p19
+as(S'good'
+p20
+S'morning'
+p21
+S'vivek'
+p22
+tp23
+(lp24
+S'Hello.\n'
+p25
+as.

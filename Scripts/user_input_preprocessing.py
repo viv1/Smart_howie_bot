@@ -6,8 +6,15 @@ from nltk.tokenize import sent_tokenize		#for spliting into sentences
 from nltk.tokenize import word_tokenize		#for spliting into words
 
 from nltk.corpus import stopwords
+from nltk.corpus import wordnet
+from nltk.corpus import names
 
+
+import subprocess
+import os
 import re
+import random
+import pickle
 
 replacement_patterns = [
 (r'won\'t', 'will not'),
@@ -34,40 +41,115 @@ class RegexpReplacer(object):
 			s = re.sub(pattern, repl, s)
 		return s
 
+#Selects and returns a statement(and it's location) based on it's weights
+def select_stat(Mapping,Weights,toks):
+	total_sum=0
+	x=0
+	for w in Weights[toks]:
+		total_sum=total_sum+Weights[toks][x]		#Find total sum of weights 
+		x=x+1
+
+	prob_val=random.random()*total_sum				#Random no. in the appropriate range
+
+	x=0
+	partial_sum=0
+	for w in Weights[toks]:
+		partial_sum=partial_sum+Weights[toks][x]	#Decide which statement to select 
+		if prob_val <= partial_sum:
+			#Weights[toks][x] = Weights[toks][x]+1	#For Updating the weight of selected statement 
+			return (Mapping[toks][x],x)				#returns in tuple form...(sent,loc)
+			#break
+		else:
+			x=x+1
+
+	#print(total_sum)
+
+# Update Weights....
+def update_weight(Weights,toks,loc):
+	Weights[toks][loc]=Weights[toks][loc]+1			#Update weight
+
 
 #DEFINITION OF MAIN
 def main():
 	
-	
-	client_says=raw_input("You: ")
-
-	#replacer=RegexpReplacer()
-	#replacer.replace("can't is a contraction")
-
-	i=0
-	#mapping={}
 
 
-	
+	training_mode=1			# if 1, in training mode
+	training_mode=input("Training mode(1) or Actual mode(0): ")
 
-#LIST OF WORDS
+	while training_mode!=0 and training_mode!=1:
+		training_mode=input("Training mode(1) or Actual mode(0): ")
+		
+	while 1:
+		client_says=raw_input("You: ")
+		#print(client_says)
 
-	tokens=[]		
-	word_list=word_tokenize(client_says)		#Split into words
+		#replacer=RegexpReplacer()
+		#replacer.replace("can't is a contraction")
 
-	for w in word_list:
 
-		tokens.append(w)				#Add each sentence to the list of words
+		with open('output.txt', 'rb') as handle:
+			Mapping = pickle.loads(handle.read())
+		with open('weights.txt', 'rb') as handle:
+			Weights = pickle.loads(handle.read())
+		
+		#print(Mapping)
+	#LIST OF WORDS
 
-#print(tokens)
+		tokens=[]		
+		word_list=word_tokenize(client_says)		#Split into words
 
-#STOPWORDS REMOVAL
-	english_stops=set(stopwords.words('english')) #Edit stopwords
-	punctuations=['.',',',"'",'?']	# '?' to be used or not
-	tokens=[w for w in tokens if w not in english_stops]
-	tokens=[w for w in tokens if w not in punctuations]
-	toks=tuple(tokens)
-	print(toks)	
+		for w in word_list:
+
+			tokens.append(w.lower())				#Add each sentence to the list of words
+
+	#print(tokens)
+
+	#STOPWORDS REMOVAL
+		english_stops=set(stopwords.words('english')) #Edit stopwords
+		punctuations=['.',',',"'",'?']	# '?' to be used or not
+		female_names=names.words('female.txt')
+		male_names=names.words('male.txt')
+
+		tokens=[w for w in tokens if w not in english_stops]
+		tokens=[w for w in tokens if w not in punctuations]
+		#Replace not rename
+		tokens=[w for w in tokens if w not in female_names]
+		tokens=[w for w in tokens if w not in male_names]
+		
+		toks=tuple(tokens)
+
+
+
+		if toks in Mapping:
+			ok=select_stat(Mapping,Weights,toks)
+			print("Coun: "+ok[0])							#ok[0] is the reply
+			if training_mode==1:
+				rating=input("Rate the response: ")
+				update_weight(Weights,toks,ok[1])		#ok[1] is the location of selected statement in list
+			
+		#if not in database...go to Howie
+		else:
+			fo = open("../Howie/howie-code/client.txt", "wb")	
+        	fo.write(client_says)
+
+        	p=subprocess.Popen(['python','../Howie/howie-code/runme.py'],stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+        	outp = open("../Howie/howie-code/foo.txt", "r")	
+        	bot_says=outp.read() 
+        	print("Coun: "+bot_says)    
+        	   
+
+			#p=subprocess.Popen(['python','runme.py'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,bufsize=1)
+		
+
+		#if toks in Mapping:
+		#	print "yeah"
+			
+		#print(Mapping)
+		# for tok in toks:
+		# 	for syn in wordnet.synsets(tok):
+		# 		for keys in Mapping:
+		# 			pass
 
 
 main()
