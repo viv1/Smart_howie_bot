@@ -54,7 +54,7 @@ def sum(object,num):
 #DEFINITION OF MAIN
 def main():
 	
-	test_file = open('pp_1_data_1.txt', 'r')
+	test_file = open('newdata.txt', 'r')
 	
 	#replacer=RegexpReplacer()
 	#replacer.replace("can't is a contraction")
@@ -88,16 +88,23 @@ def main():
 
 	#STOPWORDS REMOVAL
 		english_stops=set(stopwords.words('english')) #Edit stopwords
-		punctuations=['.',',',"'",'?']	# '?' to be used or not
+		english_stops.remove('i')
+		english_stops.remove('you')
+		punctuations=['.',',',"'",'?','(',')']	# '?' to be used or not
 		female_names=names.words('female.txt')
+		for fe in female_names:
+			fe=fe.lower()
 		male_names=names.words('male.txt')
+		for mal in male_names:
+			mal=mal.lower()
 
 		tokens=[w for w in tokens if w not in english_stops]
 		tokens=[w for w in tokens if w not in punctuations]
 
 		#Rename(not remove) names to 'Name'
-		tokens=[w for w in tokens if w not in female_names]
-		tokens=[w for w in tokens if w not in male_names]
+		#tokens=[w for w in tokens if w not in female_names]
+		#tokens=[w for w in tokens if w not in male_names]
+
 		if i%2==0:
 			client_token=tokens
 		else:

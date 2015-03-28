@@ -115,7 +115,6 @@ def add_to_db(Mapping,Weights,toks,eliza_stat):
 
 
 
-
 # Update Weights....
 def update_weight(Weights,toks,loc,rating_val):
 	if rating_val>5:
@@ -288,8 +287,9 @@ def main():
         	flag = 1
         else:
 	        print "clicked at"
-	        text.insert("0.0",text1.get("0.0", "end-1c"))
-	        text.insert("0.0",text1.get("0.0", func(text1.get("0.0", "end-1c"))))
+	        localstring = text1.get("0.0", "end-1c")
+	        text.insert("0.0",localstring)
+	        text.insert("0.0",func(localstring))
 	        #text.insert("0.0",)
 	        text1.delete("0.0", "end-1c")
 	    
