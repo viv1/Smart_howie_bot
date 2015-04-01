@@ -68,7 +68,7 @@ def select_stat(Mapping,Weights,toks):
 
 def Wordnet_sim(tuple1,tuple2):
 
-	count_members=0
+	count_members=1
 	total_sim=0
 	sim_val=0
 
@@ -155,6 +155,7 @@ def main():
 	#STOPWORDS REMOVAL
 		english_stops=set(stopwords.words('english')) #Edit stopwords
 		punctuations=['.',',',"'",'?']	# '?' to be used or not
+		
 		female_names=names.words('female.txt')
 		for fe in female_names:
 			fe=fe.lower()
@@ -186,7 +187,7 @@ def main():
 		
 		else:
 			for ma in Mapping:
-				if Wordnet_sim(toks,ma) > 0.6:
+				if Wordnet_sim(toks,ma) > 0.35:
 					eliza_needed=0
 					ok=select_stat(Mapping,Weights,ma)
 					print("Coun: "+ok[0])
@@ -200,6 +201,10 @@ def main():
 
 			with open("../Howie/howie-code/client.txt", "wb") as fo:
 				fo.write(client_says)
+			with open("client.txt", "wb") as fo:
+				fo.write(client_says)
+			with open("../Howie/howie-code/howie/frontends/client.txt", "wb") as fo:
+				fo.write(client_says)
 	#imp closing the file here..since writes to a file on close
 			#fo.write(client_says)
 
@@ -207,7 +212,7 @@ def main():
 
 			with open("../Howie/howie-code/foo.txt", "r") as outp:
 				bot_says=outp.read()
-				return ("Coun: "+bot_says)
+				print ("Coun: "+bot_says)
 
 			if training_mode==1:
 				rating=input("Rate the response: ")

@@ -7,6 +7,7 @@ from nltk.tokenize import word_tokenize		#for spliting into words
 
 from nltk.corpus import stopwords
 from nltk.corpus import names
+from nltk.stem import WordNetLemmatizer
 
 import re
 
@@ -56,12 +57,15 @@ def main():
 	
 	test_file = open('newdata.txt', 'r')
 	
-	#replacer=RegexpReplacer()
+	replacer=RegexpReplacer()
 	#replacer.replace("can't is a contraction")
 
 	i=0
 	Mapping={}
 	Weights={}
+
+	lemmatizer = WordNetLemmatizer()
+
 
 
 #LIST OF SENTENCES
@@ -81,8 +85,13 @@ def main():
 			tokens=[]		
 			word_list=word_tokenize(words)		#Split into words
 
+
+
 			for w in word_list:
-				tokens.append(w.lower())				#Add each sentence to the list of words
+
+				w=w.lower()
+				
+				tokens.append(w)				#Add each sentence to the list of words
 
 		#print(tokens)
 
@@ -90,7 +99,7 @@ def main():
 		english_stops=set(stopwords.words('english')) #Edit stopwords
 		english_stops.remove('i')
 		english_stops.remove('you')
-		punctuations=['.',',',"'",'?','(',')']	# '?' to be used or not
+		punctuations=['.',',','?','(',')','?']	# '?' to be used or not
 		female_names=names.words('female.txt')
 		for fe in female_names:
 			fe=fe.lower()
@@ -101,9 +110,26 @@ def main():
 		tokens=[w for w in tokens if w not in english_stops]
 		tokens=[w for w in tokens if w not in punctuations]
 
+		for w in tokens:
+			try:
+				w=lemmatizer.lemmatize(w)
+			except:
+				w=w
+
+		for w in tokens:
+			try:
+				w=replacer.replace(w)
+			except:
+				w=w
+				
+
+		#w=lemmatizer.lemmatize(w)
+		#tokens=[lemmatizer.lemmatize(w) for w in tokens]
 		#Rename(not remove) names to 'Name'
 		#tokens=[w for w in tokens if w not in female_names]
 		#tokens=[w for w in tokens if w not in male_names]
+		tokens = [x if (x not in male_names) else "Name" for x in tokens]
+		tokens = [x if (x not in female_names) else "Name" for x in tokens]
 
 		if i%2==0:
 			client_token=tokens

@@ -5,7 +5,8 @@ from __future__ import division
 #tuple1=('link','crow','rat')
 #tuple2=('ring','bear','owl')
 
-def Wordnet_sim()
+def Wordnet_sim():
+	
 
 	count_members=0
 	total_sim=0
@@ -26,3 +27,4 @@ def Wordnet_sim()
 	sim_val=total_sim/count_members
 	return sim_val
 
+#bkhbhbh 
