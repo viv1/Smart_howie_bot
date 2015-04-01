@@ -1,9 +1,0 @@
-C-Good Morning.
-U-Hello.
-C-Have you ever been to a therapist before?
-U-Please, call me Martha. Everyone does. 
-C-Very well, Martha, if it makes you more comfortable.
-U-I have never been to a therapist before.
-C-If you have any questions feel free to ask them at anytime, okay? Now, what brings you into the office today? 
-U- Well, I am not sure really. I had heard that She was on time, and I guess there have been some things on my mind lately. Maybe I shouldn't even be here. 
-C-Okay. Why don't we start by discussing what has been on your mind? 
