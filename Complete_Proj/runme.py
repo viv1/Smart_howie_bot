@@ -39,7 +39,7 @@ def usage():
 
 def main():
 
-	signal.alarm(7)				#To exit howie program in 4 seconds
+	signal.alarm(5)				#To exit howie program in 4 seconds
 
 	random.seed()
 
@@ -83,7 +83,7 @@ def main():
 
 	# Loop forever until the user exits.
 	while True:
-		time.sleep(10)
+		time.sleep(5)
 
 # if this file is run directly, call main.
 if __name__ == "__main__":

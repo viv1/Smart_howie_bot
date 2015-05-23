@@ -1,4 +1,2 @@
-1.Complete README (Installation, Usage)
-
-2.Remove the deliberate lag when answers are given by howie.
+1.Remove the deliberate lag when answers are given by howie.
 
