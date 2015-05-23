@@ -1,2 +1,2 @@
-1.Remove the deliberate lag when answers are given by howie.
+1.Remove the deliberate lag(if it's an issue) when answers are given by howie.
 
